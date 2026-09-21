@@ -1,0 +1,79 @@
+# Edit this file, then restart the notebook and Run All.
+
+#=========================== Defining the simulation components
+equilibration:
+  Snx17_conc: 300      # nM
+  MTM1_conc: 0         # nM
+  Probe_conc: 25       # nM
+  cargo_fraction: 0.00 # fraction of PC_concentration, not nM
+  time_s: [0, 500]
+
+assay:
+  Snx17_conc: 0        # nM
+  MTM1_conc: 25        # nM
+  Probe_conc: 0        # nM
+  time_s: [0, 1200]
+
+
+#=========================== Main, changable parameters
+affinities:
+  Kd_SA: 3160          # nM; Snx17–PI(3)P
+  Kd_MA: 13531         # nM; MTM1–PI(3)P
+  Kd_PA: 457           # nM; probe–PI(3)P
+  Kd_PB: 45700         # nM; probe–PI
+  Kd_SM: 442           # molecules/um2; Snx17–MTM1
+  Kd_SC: 15            # molecules/um2; Snx17–cargo
+
+geometry:
+  Volume: 20000000000.0   # um3; 20 uL
+  TotalMembraneSA: 19100883  # um2 membrane surface area
+
+catalysis:
+  keff_M: 0.0024482    # nM^-1 s^-1 for the current rate law
+  keff_SM: null        # null means use keff_M; or enter a separate number
+
+complex_off_rate_divisors:
+  SAM: 10              # koff_SAM = koff_SA / SAM
+  SAC: 10              # koff_SAC = koff_SA / SAC
+
+transport:
+  ka: 0.1              # s^-1; acts only on undelivered states
+
+membrane:
+  PC_concentration: 1600    # nM; original concentration scaling
+  membrane_substrate: 0.05  # fraction; 0.05 = 5%
+  membrane_product: 0.0     # fraction
+
+
+#=========================== files used for data filtting and output
+files:
+  experimental_csv: reference_data.csv  # relative to this YAML file
+  results_csv: results.csv
+  time_column: time (min)
+  time_to_seconds: 60
+  A_column: 25nM MTM1 + 300nM Snx17
+  B_column: 25nM MTM1
+
+
+#=========================== Other parameters
+association_rates:
+  kon_SA: 0.000034     # nM^-1 s^-1
+  kon_MA: 0.000034     # nM^-1 s^-1
+  kon_PA: 0.00034      # nM^-1 s^-1
+  kon_PB: 0.000034     # nM^-1 s^-1
+  kon_SM: 0.00574      # um2 molecule^-1 s^-1
+  kon_SC: 0.00574      # um2 molecule^-1 s^-1
+
+# koff = reference koff * (configured Kd / reference Kd).
+dissociation_reference:
+  bulk_Kd: 2700        # nM
+  bulk_koff: 0.093     # s^-1
+  probe_A_koff: 0.93   # s^-1
+  surface_Kd: 150      # molecules/um2
+  surface_koff: 0.861  # s^-1
+
+solver:
+  method: RK45
+  max_step: 0.01       # seconds
+  rtol: 0.001
+  atol: 0.000001
