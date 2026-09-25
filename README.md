@@ -4,6 +4,12 @@ This repository contains the ODE models used to explore how MTM1 and Snx17 affec
 
 The most basic notebook `ODE_v0.ipynb`.
 
+
+## ODE model structure
+
+![ODE model structure](code_diagram.png)
+
+
 ## Downloading and running the notebooks
 
 The notebooks are standard Jupyter Notebook (`.ipynb`) files. These were run through Anaconda.
